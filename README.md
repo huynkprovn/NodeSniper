@@ -1,4 +1,4 @@
-NodeSniper
+NodeSniper ![node.js v6.3.1](https://img.shields.io/badge/node-v6.3.1-brightgreen.svg)
 ============
 
 NodeSniper is a Pokemon Go sniper that allows you to catch Pokemon at specific coordinates without triggering a soft ban. It works by teleporting to the location of the pokemon, engaging it, teleporting back to your starting position, and then capturing it.
