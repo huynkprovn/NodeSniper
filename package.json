@@ -1,0 +1,29 @@
+{
+  "name": "node-snipe",
+  "version": "1.0.0",
+  "description": "Pokemon Go Sniper, built with node",
+  "main": "app.js",
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "pogobuf": "^1.5.0",
+    "node-pogo-protos": "^1.1.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jgmcelwain/NodeSniper.git"
+  },
+  "keywords": [
+    "pokemon"
+  ],
+  "author": "Jamie McElwain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jgmcelwain/NodeSniper/issues"
+  },
+  "homepage": "https://github.com/jgmcelwain/NodeSniper#readme"
+}

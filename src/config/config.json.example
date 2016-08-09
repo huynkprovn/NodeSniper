@@ -1,0 +1,11 @@
+{
+	"auth": {
+		"service": "ptc",
+		"username": "",
+		"password": ""
+	},
+	"location": {
+		"latitude":,
+		"longitude":
+	}
+}
