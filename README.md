@@ -33,4 +33,4 @@ Instructions
 
 ---
 
-**Discalimer**: The use of this and other sniping tools is against the the game's Terms of Service. You are likely to get banned for using it, and it was only developed for research purposes.
+**Disclaimer**: The use of this and other sniping tools is against the the game's Terms of Service. You are likely to get banned for using it, and it was only developed for research purposes.
