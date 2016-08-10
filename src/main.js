@@ -3,8 +3,10 @@ var pogobuf = require('pogobuf'),
     bluebird = require('bluebird'),
     express = require('express');
 
-var config = require('./config/config'),
-	service = config.auth.service === "google" ? new pogobuf.GoogleLogin() : new pogobuf.PTCLogin(),
+var configParser = require('../lib/configParser'),
+	config = configParser.parse(require('./config/config'));
+
+var	service = config.auth.service === "google" ? new pogobuf.GoogleLogin() : new pogobuf.PTCLogin(),
     client = new pogobuf.Client();
 
 service.login(config.auth.username, config.auth.password).then(token => {
