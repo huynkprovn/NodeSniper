@@ -5,6 +5,8 @@ NodeSniper is a Pokemon Go sniper that allows you to catch Pokemon at specific c
 
 This is a pre-release codebase. Some features may not work as intended or at all. If you would like to help, please fork the repo and make any changes, then submit a [pull request](https://github.com/jgmcelwain/NodeSniper/pulls).
 
+![Screenshot of app](http://i.imgur.com/UOFET1c.png)
+
 Planned Features
 --------
 
