@@ -1,12 +1,11 @@
 var pogobuf = require('pogobuf'),
     POGOProtos = require('node-pogo-protos'),
-    bluebird = require('bluebird'),
-    express = require('express');
+    bluebird = require('bluebird');
 
 var configParser = require('../lib/configParser'),
 	config = configParser.parse(require('./config/config'));
 
-var	service = config.auth.service === "google" ? new pogobuf.GoogleLogin() : new pogobuf.PTCLogin(),
+var service = config.auth.service === "google" ? new pogobuf.GoogleLogin() : new pogobuf.PTCLogin(),
     client = new pogobuf.Client();
 
 service.login(config.auth.username, config.auth.password).then(token => {
@@ -17,7 +16,8 @@ service.login(config.auth.username, config.auth.password).then(token => {
 }).then(() => {
 	console.log(' [+] Authenticated. Starting web server at http://127.0.0.1:3000');
 
-	var app = express();
+	var express = require('express'),
+		app = express();
 
 	app.get('/snipe', function(req, res) {
 		var cellIDs = pogobuf.Utils.getCellIDs(req.query.lat, req.query.lng);
