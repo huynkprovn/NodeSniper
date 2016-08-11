@@ -1,6 +1,5 @@
 var pogobuf = require('pogobuf'),
 	POGOProtos = require('node-pogo-protos'),
-	bluebird = require('bluebird'),
 	async = require('asyncawait/async'),
 	await = require('asyncawait/await');
  
@@ -26,7 +25,7 @@ var NodeSniper = async (function() {
 					throw new Error('lat or lng GET parameters are not set.');
 				}
 				var cellIDs = pogobuf.Utils.getCellIDs(req.query.lat, req.query.lng);
-				var mapObjects = await (bluebird.resolve(client.getMapObjects(cellIDs, Array(cellIDs.length).fill(0))));
+				var mapObjects = await (client.getMapObjects(cellIDs, Array(cellIDs.length).fill(0)));
 				var cells = mapObjects.map_cells;
 
 				var pokemons = [];
