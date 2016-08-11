@@ -1,11 +1,11 @@
 {
 	"auth": {
 		"service": "ptc",
-		"username": "",
-		"password": ""
+		"username": "YOUR_USERNAME",
+		"password": "YOUR_PASSWORD"
 	},
 	"location": {
-		"latitude":,
-		"longitude":
+		"latitude": VALID_LATITUDE,
+		"longitude": VALID_LONGITUDE
 	}
 }
