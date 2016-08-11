@@ -1,7 +1,7 @@
 var pogobuf = require('pogobuf'),
-    POGOProtos = require('node-pogo-protos'),
-    bluebird = require('bluebird'),
-    async = require('asyncawait/async'),
+	POGOProtos = require('node-pogo-protos'),
+	bluebird = require('bluebird'),
+	async = require('asyncawait/async'),
 	await = require('asyncawait/await');
  
 var NodeSniper = async (function() {
@@ -9,14 +9,14 @@ var NodeSniper = async (function() {
 		config = configParser.parse(require('./config/config'));
 
 	var service = config.auth.service === "google" ? new pogobuf.GoogleLogin() : new pogobuf.PTCLogin(),
-	    client = new pogobuf.Client();
+		client = new pogobuf.Client();
 
 	var token = await (service.login(config.auth.username, config.auth.password));
 	client.setAuthInfo(config.auth.service, token);
-    client.setPosition(config.location.latitude, config.location.longitude);
-    client.init();
+	client.setPosition(config.location.latitude, config.location.longitude);
+	client.init();
 
-    var express = require('express'),
+	var express = require('express'),
 		app = express();
 
 	app.get('/scan', async (function(req, res) {
