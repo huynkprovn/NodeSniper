@@ -1,47 +1,54 @@
 var pogobuf = require('pogobuf'),
     POGOProtos = require('node-pogo-protos'),
-    bluebird = require('bluebird');
+    bluebird = require('bluebird'),
+    async = require('asyncawait/async'),
+	await = require('asyncawait/await');
+ 
+var NodeSniper = async (function() {
+	var configParser = require('../lib/configParser'),
+		config = configParser.parse(require('./config/config'));
 
-var configParser = require('../lib/configParser'),
-	config = configParser.parse(require('./config/config'));
+	var service = config.auth.service === "google" ? new pogobuf.GoogleLogin() : new pogobuf.PTCLogin(),
+	    client = new pogobuf.Client();
 
-var service = config.auth.service === "google" ? new pogobuf.GoogleLogin() : new pogobuf.PTCLogin(),
-    client = new pogobuf.Client();
-
-service.login(config.auth.username, config.auth.password).then(token => {
-    client.setAuthInfo(config.auth.service, token);
+	var token = await (service.login(config.auth.username, config.auth.password));
+	client.setAuthInfo(config.auth.service, token);
     client.setPosition(config.location.latitude, config.location.longitude);
+    client.init();
 
-    return client.init();
-}).then(() => {
-	console.log(' [+] Authenticated. Starting web server at http://127.0.0.1:3000');
-
-	var express = require('express'),
+    var express = require('express'),
 		app = express();
 
-	app.get('/snipe', function(req, res) {
-		var cellIDs = pogobuf.Utils.getCellIDs(req.query.lat, req.query.lng);
+	app.get('/scan', async (function(req, res) {
+		var getPokemon = async (function(){
+			try {
+				if (req.query.lat === "" || req.query.lng === "") {
+					throw new Error('lat or lng GET parameters are not set.');
+				}
+				var cellIDs = pogobuf.Utils.getCellIDs(req.query.lat, req.query.lng);
+				var mapObjects = await (bluebird.resolve(client.getMapObjects(cellIDs, Array(cellIDs.length).fill(0))));
+				var cells = mapObjects.map_cells;
 
-		return bluebird.resolve(client.getMapObjects(cellIDs, Array(cellIDs.length).fill(0)))
-			.then(mapObjects => {
-			    return mapObjects.map_cells;
-			})
-			.then(cells => {
-				var catchable_pokemons = [];
+				var pokemons = [];
 				for (var i in cells) {
 					if (cells[i].catchable_pokemons.length > 0) {
 						for (var j in cells[i].catchable_pokemons) {
 							cells[i].catchable_pokemons[j].pokemon_name = pogobuf.Utils.getEnumKeyByValue(POGOProtos.Enums.PokemonId, cells[i].catchable_pokemons[j].pokemon_id);
-							catchable_pokemons.push(cells[i].catchable_pokemons[j]);
+							pokemons.push(cells[i].catchable_pokemons[j]);
 						}
 					}
 				}
-				return catchable_pokemons;
-			})
-			.then(catchable_pokemons => {
-				res.status(200).json(catchable_pokemons);
-			});
-	});
 
-   app.listen(3000);
-});
+				return { statusCode: 200, data: pokemons };
+			}
+			catch (err) {
+				return { statusCode: 500, data: { errorMessage: err.message } };
+			}
+		});
+		
+		var response = await (getPokemon());
+		res.status(response.statusCode).json(response);
+	}));
+
+	app.listen(3000);
+}).call(this);
