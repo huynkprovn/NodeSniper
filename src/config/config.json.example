@@ -1,11 +1,11 @@
 {
 	"auth": {
-		"service": "ptc",
-		"username": "YOUR_USERNAME",
-		"password": "YOUR_PASSWORD"
+		"service": "google",
+		"username": "khachuyvk",
+		"password": "tuyetlan2016"
 	},
 	"location": {
-		"latitude": VALID_LATITUDE,
-		"longitude": VALID_LONGITUDE
+		"latitude": 40.764883,
+		"longitude": -73.972967
 	}
 }
